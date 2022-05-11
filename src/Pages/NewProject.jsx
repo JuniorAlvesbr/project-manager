@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom'
+
 import styles from './NewProject.module.scss'
 
 import ProjectForm from '../components/project/ProjectForm'
 
 export default function NewProject() {
+    const navigate = useNavigate()
 
     const createPost = async (project) => {
         const response = await fetch('http://localhost:5000/projects', {
@@ -12,8 +15,11 @@ export default function NewProject() {
             },
             body: JSON.stringify(project)
         })
-        return response.json()
+        const data = await response.json()
+
+        data && navigate("/projects")
     }
+
 
     return (
         <div className={styles.newproject_container}>
